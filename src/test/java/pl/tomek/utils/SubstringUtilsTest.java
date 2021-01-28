@@ -4,7 +4,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -48,7 +47,14 @@ class SubstringUtilsTest {
             arguments("ab*fg", "ab\\*fg"),
             arguments("abcdeabcdef", "abcde"),
             arguments("ab\\\\cdefg", "ab\\\\cdef"),
-            arguments("ab\\\\*cdefgh", "ab\\\\\\*cdef")
+            arguments("ab\\\\*cdefgh", "ab\\\\\\*cdef"),
+            arguments("it is very long long long long long long test", "it * test"),
+            arguments("//*/\\", "/*/\\"), //was good
+            arguments("a * rr !", "a \\** !"), //was good
+            arguments(" ", ""),
+            arguments("dynamic", ""),
+            arguments("", "*"),
+            arguments("***", "\\**\\*\\*")
         );
     }
 
@@ -63,7 +69,18 @@ class SubstringUtilsTest {
             arguments("bcbcbcbcbcbcbc", "*******b**********d**********c****************"),
             arguments("abcdefg", "ab\\*fg"),
             arguments("ab\\*fg", "ab\\*fg"),
-            arguments("ab*fg", "ab\\*fg\\*")
+            arguments("ab*fg", "ab\\*fg\\*"),
+            arguments(null, null),
+            arguments("any", null),
+            arguments(null, "any"),
+            arguments(null, ""),
+            arguments("", null),
+            arguments(null, ""),
+            arguments(null, "*"),
+            arguments("123", "\\*"),
+            arguments("123", "\\**"),
+            arguments("\\\\\\", "\\*"),
+            arguments("zAq!@wSXxq\\", "q!*Q")
         );
     }
 }
