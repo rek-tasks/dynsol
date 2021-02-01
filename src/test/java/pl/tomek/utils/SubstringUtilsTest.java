@@ -4,6 +4,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -49,12 +50,22 @@ class SubstringUtilsTest {
             arguments("ab\\\\cdefg", "ab\\\\cdef"),
             arguments("ab\\\\*cdefgh", "ab\\\\\\*cdef"),
             arguments("it is very long long long long long long test", "it * test"),
-            arguments("//*/\\", "/*/\\"), //was good
-            arguments("a * rr !", "a \\** !"), //was good
+            arguments("//*/\\", "/*/\\"),
+            arguments("a * rr !", "a \\** !"),
             arguments(" ", ""),
             arguments("dynamic", ""),
             arguments("", "*"),
-            arguments("***", "\\**\\*\\*")
+            arguments("***", "\\**\\*\\*"),
+            arguments("a*aaa*a", "*a\\*"),
+            arguments("\\\\", "\\"),
+            arguments("lorem ipsum", " i*m"),
+            arguments("123*45", "1*5"),
+            arguments("\\\\\\", "\\"),
+            arguments("*1", "\\*"),
+            arguments("arr!", "*!"),
+            arguments(" arr ", " "),
+            arguments("***", "\\*"),
+            arguments("abcd", "a*c")
         );
     }
 
@@ -80,7 +91,14 @@ class SubstringUtilsTest {
             arguments("123", "\\*"),
             arguments("123", "\\**"),
             arguments("\\\\\\", "\\*"),
-            arguments("zAq!@wSXxq\\", "q!*Q")
+            arguments("zAq!@wSXxq\\", "q!*Q"),
+            arguments("a*bcd\\", "a\\*c"),
+            arguments("a*bcd\\", "\\*d\""),
+            arguments("a*bcd\\", "a\\*d"),
+            arguments("lorem ipsum", "ipsum "),
+            arguments(" dy\\*nami c", "*dy*\\*namic"),
+            arguments(" arr ", "  "),
+            arguments("bcd", "cb")
         );
     }
 }

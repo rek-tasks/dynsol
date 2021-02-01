@@ -48,11 +48,7 @@ public class SubstringUtils {
             if (currentSubstringChar == ANY_STRING_INDICATOR && (substrCharsCurrentIndex == 0
                 || substringChars[substrCharsCurrentIndex - 1] != ANY_STRING_ESCAPE_INDICATOR)) {
                 for (int j = substrCharsCurrentIndex + 1; j < substringLength; j++) {
-                    if (j == substringLength - 1) {
-                        return substringChars[j] == currentStringChar || substringChars[j] == ANY_STRING_INDICATOR;
-                    }
-
-                    if (substringChars[j] != ANY_STRING_INDICATOR) {
+                    if (substringChars[j] != ANY_STRING_INDICATOR || j == substringLength - 1) {
                         substrCharsCurrentIndex = j;
                         //check if next chars are escape indicator + any string indicator
                         if (substringChars[substrCharsCurrentIndex] == ANY_STRING_ESCAPE_INDICATOR &&
@@ -60,11 +56,11 @@ public class SubstringUtils {
                             substringChars[substrCharsCurrentIndex + 1] == ANY_STRING_INDICATOR) {
                             substrCharsCurrentIndex++;
                         }
-                        currentSubstringChar = substringChars[substrCharsCurrentIndex];
-                        isAnyCharMode = true;
                         break;
                     }
                 }
+                currentSubstringChar = substringChars[substrCharsCurrentIndex];
+                isAnyCharMode = true;
             }
 
             //handle process in any char mode (escape asterisk detected)
@@ -102,7 +98,7 @@ public class SubstringUtils {
             }
 
             //end algorithm when substring was iterated entirely
-            if (substrCharsCurrentIndex == substringLength - 1) {
+            if (substrCharsCurrentIndex == substringLength) {
                 return currentlyMatches;
             }
         }
